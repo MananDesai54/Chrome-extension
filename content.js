@@ -50,14 +50,13 @@ function gotMessage(message,sender,sendResponse) {
         console.log(CodeForce_IO);
          
         let data = `${problem_name} ${'\n'}`;
-        data += input.join('\n');
-        data += '\n';
-        data += `Output (${op.length})${'\n'}`;
-        data += output.join('\n');
+        data += input.join('\n' + '$###%###%#############%###%###$' + '\n');
+        let data1 = `Output (${op.length})${'\n'}`;
+        data1 += output.join('\n' + '$###%###%#############%###%###$' + '\n');
 
 
         const textToBLOB = new Blob([data], { type: 'text/plain' });
-        const sFileName = `${problem_name}.txt`;
+        const sFileName = `input.txt`;
 
         let newLink = document.createElement("a");
         newLink.download = sFileName;
@@ -71,7 +70,23 @@ function gotMessage(message,sender,sendResponse) {
             document.body.appendChild(newLink);
         }
 
-        newLink.click(); 
+        const textToBLOB1 = new Blob([data1], { type: 'text/plain' });
+        const sFileName1 = `output.txt`;
+
+        let newLink1 = document.createElement("a");
+        newLink1.download = sFileName1;
+
+        if (window.webkitURL != null) {
+            newLink1.href = window.webkitURL.createObjectURL(textToBLOB1);
+        }
+        else {
+            newLink1.href = window.URL.createObjectURL(textToBLOB1);
+            newLink1.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click();
+        newLink1.click();
     }
 }
 chrome.runtime.onMessage.addListener(gotMessage);                       
